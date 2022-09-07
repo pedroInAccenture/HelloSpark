@@ -18,13 +18,14 @@ object variables extends App {
   //    x = 15.5
 
 
-  // lazy : optimización
+  // lazy : optimización (Variable que se evalua cuando se llama)
   lazy val w = z - 1
   lazy val z = 100
   println(w)
 
   val l = LazyList(1, 2, 3, 4)
   println(l.headOption)
+  //headOption = Devuelve el primer elemento de esta colección, envuelto con Some
 }
 
 object tiposNumericos extends App {
@@ -46,18 +47,21 @@ object tiposNumericos extends App {
   //  var s: Short = 32767
   //  var b: Byte = 127
   s = b
+  println(s)
   //  b = s
 
   l = i
   //i = l
+  println(l)
 }
 
 object otrosTipos extends App {
   val bool: Boolean = !false
   val ch: Char = 'A'
-  val empty: Unit = ()
+  val empty: Unit = () //Preguntar esto
 
   var person: Any = "Pedro"
+  //Any es que puede ser una variable de varios tipos, como String, char, short, etc.
   person = 22
   person = List()
   person = Array()
@@ -67,6 +71,7 @@ object otrosTipos extends App {
 
   // Interpolacion de Strings
   val bookTitle = "Beginning Scala"
+  //Por que aqui no se puso el bookTitle: String = "Beginning Scala" ?
   print(s"Book title is ${bookTitle}")
 }
 
@@ -130,6 +135,8 @@ object listasexample extends App {
   booksList.appended("newBook")
   booksList + "nuevo libro"
   booksList.take(1)
+
+  println(booksList)
 }
 
 object tuplasExample extends App {
@@ -138,7 +145,7 @@ object tuplasExample extends App {
 
   val tuple2 = "title" -> "Beginning Scala"
 
-  //acceder
+  //acceder a la tupla
   val third = tuple._3
   println(third)
 }
@@ -292,7 +299,7 @@ object recursionExample extends App {
 }
 
 object curriedFunction extends App {
-  //Agregacion
+  //Agregacion NO entendi mucho
   val resultado = (1 to 3).foldLeft(1L)((r, n) => r * n)
   println(resultado)
 }
@@ -328,7 +335,7 @@ object tiposExample extends App {
 //Genericos
 
 object genericosExample extends App {
-
+  //No entendi
   //Comodines ;  letras mayusculas entre corchetes
 
   def f[A](x: A): String = s"$x"
@@ -369,6 +376,7 @@ object tiposAlgebraicos extends App {
 //disyunciones
 //enfocados para cuendo se presentan nulos (some y None)
 object disyunciones extends App {
+  //No entendi mucho
   //(a y B)  o (A union B)
   //tratar los valores nulos como inexistentes para operar cuando el valor exista
   //verlos como listas de un elemento
