@@ -1,5 +1,8 @@
 package sample
 
+import com.typesafe.config.ConfigFactory
+import utils.LoadConf
+
 import scala.annotation.tailrec
 import scala.util.Try
 
@@ -293,7 +296,14 @@ object recursionExample extends App {
 
 object curriedFunction extends App {
   //Agregacion
-  val resultado = (1 to 3).foldLeft(1L)((r, n) => r * n)
+  def f(r:Int,n:Int) = r * n
+
+  //1,2,3
+  // accc = 1
+  //1
+  //2
+  //6
+  val resultado = (1 to 3).foldLeft(2)((r, n) => r * n)
   println(resultado)
 }
 
@@ -450,17 +460,19 @@ object eitherExample extends App {
 }
 
 object ejercicio1 extends App {
-  trait persona
-  trait persona2
-
-  trait actor extends persona with persona2
+//  trait persona
+//  trait persona2
+//
+//  trait actor extends persona with persona2
 
   def foo(a:Int, b:Int)(x:Int)(y:Int): Int = a * b + x - y
 
-  var a = foo _
-  println(a(1,2))
-
-  println( 'a'.toInt)
+  val func1 = foo(1,2)(3)_
+  print(func1)
+//  var a = foo _
+//  println(a(1,2))
+//
+//  println( 'a'.toInt)
 
 }
 /**
@@ -474,3 +486,9 @@ object ejercicio1 extends App {
  * Alumno(nombre, edad, materias), Profesor(nombre, edad, departamentoId), Oyente(nombre, edad) y Otro (Director, Suplente).
  *
  */
+
+object readConfFiles extends App{
+  val config = LoadConf.input()
+  print(config.getString("path"))
+
+}
