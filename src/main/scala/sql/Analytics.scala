@@ -39,11 +39,11 @@ object Analytics extends App {
   /**
    * TRANSFORMATIONS
    */
-  val dfTransformed = df.select(col("*"),lit(1))
+  val dfTransformed = df.select(col("*"),lit(1).alias("literal"))
 
 
   /**
-   * INPUTS
+   * OUTPUT
    */
   logger.info("=====> Writing file")
   dfTransformed.write.mode("overwrite")
@@ -51,6 +51,8 @@ object Analytics extends App {
 
 
   logger.info("=====> sleeping")
+  logger.warn("=====> sleeping")
+  logger.error("=====> sleeping")
 //  Thread.sleep(1000000)
 
 }
