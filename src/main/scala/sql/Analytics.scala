@@ -3,7 +3,7 @@ package sql
 
 import com.typesafe.config.Config
 import org.apache.log4j.Logger
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.apache.spark.sql.functions.{col, lit}
 import utils.{Constant, LoadConf}
 
@@ -33,21 +33,23 @@ object Analytics extends App {
 
   val df = spark.read
     .option("header",true)
-    .csv(conf.getString("input.path"))
+    .csv(conf.getString("input.path")) //Lee el archivo del conf el de clientes csv
 
 
   /**
    * TRANSFORMATIONS
    */
-  val dfTransformed = df.select(col("*"),lit(1))
+  val dfTransformed = df.select(col("*"),lit(3))
 
 
   /**
    * INPUTS
    */
   logger.info("=====> Writing file")
+
   dfTransformed.write.mode("overwrite")
-    .csv(conf.getString("output.path"))
+    .csv(conf.getString("output.path")) //Para que se guarde en el de clientes
+
 
 
   logger.info("=====> sleeping")
