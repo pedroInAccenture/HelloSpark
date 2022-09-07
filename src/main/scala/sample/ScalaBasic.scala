@@ -18,7 +18,7 @@ object variables extends App {
   //    x = 15.5
 
 
-  // lazy : optimización (Variable que se evalua cuando se llama)
+  // lazy : optimización
   lazy val w = z - 1
   lazy val z = 100
   println(w)
@@ -58,7 +58,7 @@ object tiposNumericos extends App {
 object otrosTipos extends App {
   val bool: Boolean = !false
   val ch: Char = 'A'
-  val empty: Unit = () //Preguntar esto
+  val empty: Unit = ()
 
   var person: Any = "Pedro"
   //Any es que puede ser una variable de varios tipos, como String, char, short, etc.
@@ -299,7 +299,7 @@ object recursionExample extends App {
 }
 
 object curriedFunction extends App {
-  //Agregacion NO entendi mucho
+  //Agregacion
   val resultado = (1 to 3).foldLeft(1L)((r, n) => r * n)
   println(resultado)
 }
@@ -335,7 +335,7 @@ object tiposExample extends App {
 //Genericos
 
 object genericosExample extends App {
-  //No entendi
+
   //Comodines ;  letras mayusculas entre corchetes
 
   def f[A](x: A): String = s"$x"
@@ -376,7 +376,6 @@ object tiposAlgebraicos extends App {
 //disyunciones
 //enfocados para cuendo se presentan nulos (some y None)
 object disyunciones extends App {
-  //No entendi mucho
   //(a y B)  o (A union B)
   //tratar los valores nulos como inexistentes para operar cuando el valor exista
   //verlos como listas de un elemento
