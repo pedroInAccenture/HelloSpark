@@ -51,7 +51,6 @@ object Analytics extends App {
     .csv(conf.getString("output.path")) //Para que se guarde en el de clientes
 
 
-
   logger.info("=====> sleeping")
 //  Thread.sleep(1000000)
 

@@ -44,7 +44,7 @@ object AnalitycsTres extends App {
   /**
    * INPUTS
    */
-  logger.info("=====> Writing file avro")
+  logger.info("=====> Writing file parquet")
 
   dfTransformed.write.format("parquet").mode(SaveMode.Overwrite)
     .save(conf.getString("output.pathTres"))

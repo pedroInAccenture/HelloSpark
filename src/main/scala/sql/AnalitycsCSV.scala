@@ -2,13 +2,12 @@ package sql
 
 
 import com.typesafe.config.Config
-import org.apache.hadoop.shaded.org.jline.keymap.KeyMap.display
 import org.apache.log4j.Logger
 import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.apache.spark.sql.functions.{col, lit}
 import utils.{Constant, LoadConf}
 
-object AnalitycsDos extends App {
+object AnalitycsCSV extends App {
 
   /**
    *  Spark settings
@@ -34,26 +33,28 @@ object AnalitycsDos extends App {
 
   val df = spark.read
     .option("header",true)
-    .csv(conf.getString("input.pathDos")) //Lee el archivo del conf el de clientes csv
+    .csv(conf.getString("input.path")) //Lee el archivo del conf el de clientes csv
 
 
   /**
    * TRANSFORMATIONS
    */
-  val dfTransformed = df.select(col("*"),lit(3).as("literal"))
+  val dfTransformed = df.select(col("*"),lit(2).as("partitioner"))
 
 
   /**
    * INPUTS
    */
-  logger.info("=====> Writing file")
+  logger.info("=====> Writing file avro partitioner")
+
+  dfTransformed.write.partitionBy("tr")
+    .format("avro").save(conf.getString("output.pathPartitionerAVRO"))
+
+  dfTransformed.write.partitionBy("tr")
+    .format("parquet").save(conf.getString("output.pathPartitionerPARQUET"))
 
 
-  dfTransformed.write.format("avro").mode(SaveMode.Overwrite)
-    .save(conf.getString("output.pathDos"))
-
-
-  logger.info("=====> sleeping")
-
+  logger.info("=====> Termino")
+  //  Thread.sleep(1000000)
 
 }

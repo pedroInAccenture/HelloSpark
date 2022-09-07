@@ -30,15 +30,15 @@ object AnalitycsCuatro extends App {
   /**
    * INPUTS
    */
-  logger.info("=====> Reading file avro")
+  logger.info("=====> Reading file parquet")
 
-  val data = spark.read.format("avro").load(conf.getString("output.pathTres"))
+  val data = spark.read.format("parquet").load(conf.getString("output.pathTres"))
 
 
   /**
    * TRANSFORMATIONS
    */
-  val dfTransformed = data.select(col("*"),lit(3).as("nuevo"))
+  val dfTransformed = data.select(col("*"),lit(5).as("nuevo"))
 
 
   /**
