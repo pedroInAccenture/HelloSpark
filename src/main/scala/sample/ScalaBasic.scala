@@ -474,5 +474,3 @@ object ejercicio1 extends App {
  * Alumno(nombre, edad, materias), Profesor(nombre, edad, departamentoId), Oyente(nombre, edad) y Otro (Director, Suplente).
  *
  */
-
-
