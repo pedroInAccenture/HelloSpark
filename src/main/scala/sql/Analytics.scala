@@ -39,6 +39,7 @@ object Analytics extends App {
   /**
    * TRANSFORMATIONS
    */
+  logger.info("=====> Transform data")
   val dfTransformed = df.select(col("*"),lit(1).alias("literal"))
 
 
@@ -46,14 +47,17 @@ object Analytics extends App {
    * OUTPUT
    */
   logger.info("=====> Writing file")
-  dfTransformed.write.mode("overwrite")
-    .csv(conf.getString("output.path"))
+//  dfTransformed.write.mode("overwrite")
+//    .csv(conf.getString("output.path"))
 
+  dfTransformed.write.format("avro").save(conf.getString("output.pathAvro"))
+
+//  dfTransformed.write.mode("overwrite").parquet(conf.getString("output.pathParquet"))
 
   logger.info("=====> sleeping")
   logger.warn("=====> sleeping")
   logger.error("=====> sleeping")
-//  Thread.sleep(1000000)
+  Thread.sleep(1000000)
 
 }
 
