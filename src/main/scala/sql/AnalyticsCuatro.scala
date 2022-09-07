@@ -8,7 +8,7 @@ import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.apache.spark.sql.functions.{col, lit}
 import utils.{Constant, LoadConf}
 
-object AnalyticsDos extends App {
+object AnalyticsCuatro extends App {
 
   /**
    *  Spark settings
@@ -30,31 +30,30 @@ object AnalyticsDos extends App {
   /**
    * INPUTS
    */
-  logger.info("=====> Reading file")
+  logger.info("=====> Reading file Parquet")
 
-  val df = spark.read
-    .option("header",true)
-    .csv(conf.getString("input.pathDos")) //Lee el archivo del conf el de clientes csv
+  val data = spark.read.format("parquet").load(conf.getString("output.pathTres"))
 
 
   /**
    * TRANSFORMATIONS
    */
-  val dfTransformed = df.select(col("*"),lit(3).as("literal"))
+  val dfTransformed = data.select(col("*"),lit(3).as("nuevo"))
 
 
   /**
    * INPUTS
    */
-  logger.info("=====> Writing file")
+  logger.info("=====> Writing file parquet")
 
+  dfTransformed.write.format("parquet").mode(SaveMode.Overwrite)
+    .save(conf.getString("output.pathCuatro"))
 
-  dfTransformed.write.format("avro").mode(SaveMode.Overwrite)
-    .save(conf.getString("output.pathDos"))
 
 
   logger.info("=====> sleeping")
   //  Thread.sleep(1000000)
+
 
 
 }
