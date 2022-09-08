@@ -6,7 +6,7 @@
 
     <groupId>sample</groupId>
     <artifactId>sample</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.3-SNAPSHOT</version>
 
     <properties>
         <spark.version>3.2.2</spark.version>
@@ -69,10 +69,17 @@
         <!--            <version>11.0</version>-->
         <!--        </dependency>-->
 
+        <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-avro -->
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-avro_2.11</artifactId>
-            <version>2.4.0</version>
+            <artifactId>spark-avro_2.13</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.parquet/parquet-avro -->
+        <dependency>
+            <groupId>org.apache.parquet</groupId>
+            <artifactId>parquet-avro</artifactId>
+            <version>1.12.3</version>
         </dependency>
 
     </dependencies>
