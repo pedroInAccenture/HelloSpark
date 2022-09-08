@@ -52,7 +52,5 @@ object AnalitycsCuatro extends App {
   logger.info("=====> sleeping")
   //  Thread.sleep(1000000)
 
-
-
 }
 
