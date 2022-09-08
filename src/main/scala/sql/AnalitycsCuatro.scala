@@ -49,7 +49,6 @@ object AnalitycsCuatro extends App {
   dfTransformed.write.format("parquet").mode(SaveMode.Overwrite)
     .save(conf.getString("output.pathCuatro"))
 
-
   logger.info("=====> sleeping")
   //  Thread.sleep(1000000)
 
