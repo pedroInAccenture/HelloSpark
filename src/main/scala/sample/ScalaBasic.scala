@@ -1,8 +1,5 @@
 package sample
 
-import com.typesafe.config.ConfigFactory
-import utils.LoadConf
-
 import scala.annotation.tailrec
 import scala.util.Try
 
@@ -28,6 +25,7 @@ object variables extends App {
 
   val l = LazyList(1, 2, 3, 4)
   println(l.headOption)
+  //headOption = Devuelve el primer elemento de esta colección, envuelto con Some
 }
 
 object tiposNumericos extends App {
@@ -49,10 +47,12 @@ object tiposNumericos extends App {
   //  var s: Short = 32767
   //  var b: Byte = 127
   s = b
+  println(s)
   //  b = s
 
   l = i
   //i = l
+  println(l)
 }
 
 object otrosTipos extends App {
@@ -61,6 +61,7 @@ object otrosTipos extends App {
   val empty: Unit = ()
 
   var person: Any = "Pedro"
+  //Any es que puede ser una variable de varios tipos, como String, char, short, etc.
   person = 22
   person = List()
   person = Array()
@@ -70,6 +71,7 @@ object otrosTipos extends App {
 
   // Interpolacion de Strings
   val bookTitle = "Beginning Scala"
+  //Por que aqui no se puso el bookTitle: String = "Beginning Scala" ?
   print(s"Book title is ${bookTitle}")
 }
 
@@ -133,6 +135,8 @@ object listasexample extends App {
   booksList.appended("newBook")
   booksList + "nuevo libro"
   booksList.take(1)
+
+  println(booksList)
 }
 
 object tuplasExample extends App {
@@ -141,7 +145,7 @@ object tuplasExample extends App {
 
   val tuple2 = "title" -> "Beginning Scala"
 
-  //acceder
+  //acceder a la tupla
   val third = tuple._3
   println(third)
 }
@@ -296,14 +300,7 @@ object recursionExample extends App {
 
 object curriedFunction extends App {
   //Agregacion
-  def f(r:Int,n:Int) = r * n
-
-  //1,2,3
-  // accc = 1
-  //1
-  //2
-  //6
-  val resultado = (1 to 3).foldLeft(2)((r, n) => r * n)
+  val resultado = (1 to 3).foldLeft(1L)((r, n) => r * n)
   println(resultado)
 }
 
@@ -460,19 +457,17 @@ object eitherExample extends App {
 }
 
 object ejercicio1 extends App {
-//  trait persona
-//  trait persona2
-//
-//  trait actor extends persona with persona2
+  trait persona
+  trait persona2
+
+  trait actor extends persona with persona2
 
   def foo(a:Int, b:Int)(x:Int)(y:Int): Int = a * b + x - y
 
-  val func1 = foo(1,2)(3)_
-  print(func1)
-//  var a = foo _
-//  println(a(1,2))
-//
-//  println( 'a'.toInt)
+  var a = foo _
+  println(a(1,2))
+
+  println( 'a'.toInt)
 
 }
 /**
@@ -486,9 +481,3 @@ object ejercicio1 extends App {
  * Alumno(nombre, edad, materias), Profesor(nombre, edad, departamentoId), Oyente(nombre, edad) y Otro (Director, Suplente).
  *
  */
-
-object readConfFiles extends App{
-  val config = LoadConf.input()
-  print(config.getString("path"))
-
-}
