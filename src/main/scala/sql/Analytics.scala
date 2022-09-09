@@ -56,3 +56,49 @@ object Analytics extends App {
 
 }
 
+
+object executeParquetToParquet{
+  /**
+   * Spark settings
+   */
+  val logger = Logger.getLogger(this.getClass.getName)
+
+  val spark: SparkSession = SparkSession.builder()
+    .master("local[1]")
+    .appName("example")
+    .getOrCreate()
+
+
+  /**
+   * PARAMETERS
+   */
+  val conf: Config = LoadConf.getConfig
+
+
+  /**
+   * INPUTS
+   */
+  logger.info("=====> Reading file")
+
+  //  val dfParquet = spark.read.parquet(conf.getString ("output.pathParquet")+"/age=22")
+  //  case class Person(id:String, name:String, age:String, tr:String)
+  //  import spark.implicits._
+
+  val dfClientes = spark.read
+    .parquet(conf.getString ("output.pathParquet"))
+    .where(col("age") === "22" )
+
+
+  dfClientes.show()
+  /**
+   * TRANSFORMATION
+   */
+  val dfAgeCount = dfClientes.groupBy("age").count()
+  dfAgeCount.show()
+
+  dfAgeCount.write.partitionBy("age")
+    .mode("append")
+    .parquet(conf.getString("output.pathNewParquet"))
+
+}
+
