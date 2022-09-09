@@ -7,11 +7,18 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.{col, lit}
 import utils.{Constant, LoadConf}
 
-object Analytics extends App {
+object analytics {
 
+  def main(args: Array[String]): Unit = {
+    executeCsv
+  }
+
+}
+
+object executeCsv {
   /**
-    *  Spark settings
-    */
+   * Spark settings
+   */
   val logger = Logger.getLogger(this.getClass.getName)
 
   val spark: SparkSession = SparkSession.builder()
@@ -21,26 +28,42 @@ object Analytics extends App {
 
 
   /**
-    *  PARAMETERS
+   * PARAMETERS
    */
-  val conf:Config = LoadConf.getConfig
+  val conf: Config = LoadConf.getConfig
 
 
   /**
-    * INPUTS
+   * INPUTS
    */
   logger.info("=====> Reading file")
 
   val df = spark.read
-    .option("header",true)
-    .csv(conf.getString("input.path"))
+    .option("header", true)
+    .csv(conf.getString("input.pathClientes"))
 
+
+  val dfTransactions = spark.read
+    .option("header", true)
+    .csv(conf.getString("input.pathTransacciones"))
 
   /**
    * TRANSFORMATIONS
    */
-  val dfTransformed = df.select(col("*"),lit(1).alias("literal"))
+  logger.info("=====> Transforming table")
+  val dfTransformed = df.select(col("*"), lit(1).alias("literal"))
 
+  logger.info("=====> Explain select")
+  dfTransformed.explain()
+
+  val dfJoined = dfTransformed.join(
+    dfTransactions,
+    dfTransformed("tr") === dfTransactions("idTr"),
+    "inner"
+  )
+
+  logger.info("=====> Explain join")
+  dfJoined.explain()
 
   /**
    * OUTPUT
@@ -50,10 +73,8 @@ object Analytics extends App {
     .csv(conf.getString("output.path"))
 
 
-  logger.info("=====> sleeping")
+  logger.info("=====> end process")
   logger.warn("=====> sleeping")
-  logger.error("=====> sleeping")
-//  Thread.sleep(1000000)
 
+//  Thread.sleep(10000000)
 }
-
