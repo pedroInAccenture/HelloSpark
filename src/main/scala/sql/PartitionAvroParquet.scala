@@ -59,11 +59,11 @@ object PartitionAvroParquet extends App{
   logger.info("=====> Writing file") //log
 
   //particion
-  dataTransformed.write.partitionBy("tr").format("avro")
+  dataTransformed.write.partitionBy("tr").format("avro").mode("overwrite")
     .save(conf.getString("output.pathAvroC"))
 
-  dataTransformed.write.partitionBy("tr").format("parquet")
-    .save(conf.getString("output.pathParquet"))
+  dataTransformed.write.partitionBy("tr").format("parquet").mode("overwrite")
+   .save(conf.getString("output.pathParquet"))
 
 
   logger.info("=====> sleeping") //termina

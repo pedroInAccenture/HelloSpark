@@ -35,7 +35,7 @@ object ConvertCVStoAvro extends App{
   //crear dataframe desde un archivo csv
   //leer archivos csv
   val data = spark.read
-    .option("header",true)
+    .option("header",true) //para que se muestre el header
     .csv(conf.getString("input.pathDos")) //se va a cargar de esa ruta
    // df.show() //se imprime la tabla
    // df.printSchema() //se imprime la tabla
@@ -53,16 +53,9 @@ object ConvertCVStoAvro extends App{
   logger.info("=====> Writing file") //log
   //convertir csv a avro
    dataTransformed.write.format("avro").mode(SaveMode.Overwrite)
-  .save(conf.getString("output.pathDos"))
+  .save(conf.getString("output.pathDos")) //donde se va a guardar el archivo
 
 
-  /*
-  //convertir a avro por particion
-  dfTransformed.write.partitionBy("state")
-    .format("avro")
-    .mode(SaveMode.Overwrite)
-    .save(conf.getString("output.pathDos"))
-  */
 
   logger.info("=====> sleeping")
 
