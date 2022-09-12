@@ -38,7 +38,7 @@ object AnalyticsTres extends App {
   /**
    * TRANSFORMATIONS
    */
-  val dfTransformed = data.select(col("*"),lit(3).as("prueba tres"))
+  val dfTransformed = data.select(col("*"),lit(3).as("nuevo"))
 
 
   /**

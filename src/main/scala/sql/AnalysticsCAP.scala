@@ -1,14 +1,13 @@
 package sql
 
-
 import com.typesafe.config.Config
-import org.apache.hadoop.shaded.org.jline.keymap.KeyMap.display
 import org.apache.log4j.Logger
 import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.apache.spark.sql.functions.{col, lit}
 import utils.{Constant, LoadConf}
 
-object AnalyticsCuatro extends App {
+object AnalysticsCAP extends App {
+
 
   /**
    *  Spark settings
@@ -30,24 +29,28 @@ object AnalyticsCuatro extends App {
   /**
    * INPUTS
    */
-  logger.info("=====> Reading file Parquet")
+  logger.info("=====> Reading file")
 
-  val data = spark.read.format("parquet").load(conf.getString("output.pathTres"))
+  val df = spark.read
+    .option("header",true)
+    .csv(conf.getString("input.path"))
 
 
   /**
    * TRANSFORMATIONS
    */
-  val dfTransformed = data.select(col("*"),lit(5).as("ultimo"))
-
+  val dfTransformed = df.select(col("*"),lit(2).as("particion"))
 
   /**
    * INPUTS
    */
-  logger.info("=====> Writing file parquet")
+  logger.info("=====> Writing file avro particion")
 
-  dfTransformed.write.format("parquet").mode(SaveMode.Overwrite)
-    .save(conf.getString("output.pathCuatro"))
+  dfTransformed.write.partitionBy("tr")
+    .format("avro").save(conf.getString("output.pathParticionAvro"))
+
+  dfTransformed.write.partitionBy("tr")
+    .format("parquet").save(conf.getString("output.pathParticionParquet"))
 
 
 
