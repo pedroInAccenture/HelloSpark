@@ -4,7 +4,7 @@ package sql
 import com.typesafe.config.Config
 import org.apache.log4j.Logger
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions.{col, lit}
+import org.apache.spark.sql.functions.{broadcast, col, lit}
 import utils.{Constant, LoadConf}
 
 object analytics {
@@ -76,5 +76,6 @@ object executeCsv {
   logger.info("=====> end process")
   logger.warn("=====> sleeping")
 
-//  Thread.sleep(10000000)
+  Thread.sleep(10000000)
 }
+
