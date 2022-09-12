@@ -3,15 +3,18 @@ package sql
 
 import com.typesafe.config.Config
 import org.apache.log4j.Logger
-import org.apache.spark.sql.{SaveMode, SparkSession}
-import org.apache.spark.sql.functions.{col, lit}
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions.{col, lit} //blibliotecas de spark sql
 import utils.{Constant, LoadConf}
 
 object Analytics extends App {
 
   /**
     *  Spark settings
-    */
+   *  cargar la configuracion del spark junto con el logger
+   *
+   */
+    //bibliotecas que ayudan a generar logs
   val logger = Logger.getLogger(this.getClass.getName)
 
   val spark: SparkSession = SparkSession.builder()
@@ -23,82 +26,41 @@ object Analytics extends App {
   /**
     *  PARAMETERS
    */
-  val conf:Config = LoadConf.getConfig
+    //cargar configuracion apartir de archivos de configuracion (en resources .conf)
+  val conf:Config = LoadConf.getConfig //cargan los parametros apartir del archivo
 
 
   /**
     * INPUTS
    */
-  logger.info("=====> Reading file")
-
+  logger.info("=====> Reading file") //llevar la traza
+ //leer archivos csv
   val df = spark.read
     .option("header",true)
-    .csv(conf.getString("input.path")) //Lee el archivo del conf el de clientes csv
-
+    .csv(conf.getString("input.path")) //se va a cargar de esa ruta
+  df.show() //se imprime la tabla
+  df.printSchema()  //se imprime la tabla
 
   /**
    * TRANSFORMATIONS
    */
-  val dfTransformed = df.select(col("*"),lit(3))
+
+  val dfTransformed = df.select(col("*"),lit(1))
+
 
 
   /**
    * INPUTS
    */
+  //escribir el archivo
   logger.info("=====> Writing file")
-
   dfTransformed.write.mode("overwrite")
-    .csv(conf.getString("output.path")) //Para que se guarde en el de clientes
+    .csv(conf.getString("output.path"))
 
 
   logger.info("=====> sleeping")
 //  Thread.sleep(1000000)
 
-}
-
-
-object executeParquetToParquet{
-  /**
-   * Spark settings
-   */
-  val logger = Logger.getLogger(this.getClass.getName)
-
-  val spark: SparkSession = SparkSession.builder()
-    .master("local[1]")
-    .appName("example")
-    .getOrCreate()
-
-
-  /**
-   * PARAMETERS
-   */
-  val conf: Config = LoadConf.getConfig
-
-
-  /**
-   * INPUTS
-   */
-  logger.info("=====> Reading file")
-
-  //  val dfParquet = spark.read.parquet(conf.getString ("output.pathParquet")+"/age=22")
-  //  case class Person(id:String, name:String, age:String, tr:String)
-  //  import spark.implicits._
-
-  val dfClientes = spark.read
-    .parquet(conf.getString ("output.pathParquet"))
-    .where(col("age") === "22" )
-
-
-  dfClientes.show()
-  /**
-   * TRANSFORMATION
-   */
-  val dfAgeCount = dfClientes.groupBy("age").count()
-  dfAgeCount.show()
-
-  dfAgeCount.write.partitionBy("age")
-    .mode("append")
-    .parquet(conf.getString("output.pathNewParquet"))
 
 }
 

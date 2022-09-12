@@ -25,7 +25,6 @@ object variables extends App {
 
   val l = LazyList(1, 2, 3, 4)
   println(l.headOption)
-  //headOption = Devuelve el primer elemento de esta colección, envuelto con Some
 }
 
 object tiposNumericos extends App {
@@ -47,12 +46,10 @@ object tiposNumericos extends App {
   //  var s: Short = 32767
   //  var b: Byte = 127
   s = b
-  println(s)
   //  b = s
 
   l = i
   //i = l
-  println(l)
 }
 
 object otrosTipos extends App {
@@ -61,7 +58,6 @@ object otrosTipos extends App {
   val empty: Unit = ()
 
   var person: Any = "Pedro"
-  //Any es que puede ser una variable de varios tipos, como String, char, short, etc.
   person = 22
   person = List()
   person = Array()
@@ -71,7 +67,6 @@ object otrosTipos extends App {
 
   // Interpolacion de Strings
   val bookTitle = "Beginning Scala"
-  //Por que aqui no se puso el bookTitle: String = "Beginning Scala" ?
   print(s"Book title is ${bookTitle}")
 }
 
@@ -135,8 +130,6 @@ object listasexample extends App {
   booksList.appended("newBook")
   booksList + "nuevo libro"
   booksList.take(1)
-
-  println(booksList)
 }
 
 object tuplasExample extends App {
@@ -145,7 +138,7 @@ object tuplasExample extends App {
 
   val tuple2 = "title" -> "Beginning Scala"
 
-  //acceder a la tupla
+  //acceder
   val third = tuple._3
   println(third)
 }
